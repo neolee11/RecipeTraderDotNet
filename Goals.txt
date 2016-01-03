@@ -1,0 +1,27 @@
+Software Requirement 
+* A Recipe trading system - Create your own recipe (a How-To-Do list or Work list), then you can trade it publicly with an optional fee
+* A recipe consists of items, either steps (ordered) or tasks (unordered). Item should have timestamps, status (Ready, In Progress, Done). Can select display only certain types of items (by status, timestamp). Can record history of recipe completion.
+* Reciple itself determines the item types it contains
+* A user needs to login 
+* Front page shows previews of publicly traded recipes
+* Need to deposit, credit/debit money
+* Need to have notification system and email system in replace.
+* Use UTC time 
+
+Practice Goals
+* TDD
+	- xUnit.Net: install xUnit packages from Nuget, and install xUnit runner for VS or for ReSharper via extensions
+* IoC and Mocking
+* C# features
+* Design patterns 
+* Command line app
+* Entity framework
+* Web API
+* MVC
+
+
+Problems:s
+* My OOP design techniques.
+
+Lessons Learned:
+* fn + enter is like insert on windows
