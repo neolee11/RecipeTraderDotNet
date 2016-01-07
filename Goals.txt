@@ -1,3 +1,6 @@
+To Dos:
+* continue understand the architecture of nopCommerce
+
 Software Requirement 
 * A Recipe trading system - Create your own recipe (a How-To-Do list or Work list), then you can trade it publicly with an optional fee
 * A recipe consists of items, either steps (ordered) or tasks (unordered). Item should have timestamps, status (Ready, In Progress, Done). Can select display only certain types of items (by status, timestamp). Can record history of recipe completion.
@@ -12,7 +15,9 @@ Practice Goals
 * TDD
 	- xUnit.Net: install xUnit packages from Nuget, and install xUnit runner for VS or for ReSharper via extensions
 * IoC and Mocking
+* Plugin architecture
 * C# features
+* C# collections (major ones and their namespaces) and generics
 * Design patterns 
 * Command line app
 * Entity framework
@@ -20,8 +25,26 @@ Practice Goals
 * MVC
 
 
-Problems:s
+Problems:
 * My OOP design techniques.
+  Solution: 
+	- Encapsulation and SOLID: Mark IV Coffee Maker - make use of the observer pattern
+	Building End-to-End Multi-Client Service Oriented Applications 
+	Tactical Design Patterns in .NET: Managing Responsibilities
+	Tactical Design Patterns in .NET: Control Flow
+	nopCommerce source code
+	EF courses source code - how OOP design cope with EF, also implement EF code first itself. Deal with Graphs.
+		Entity Framework 4.1 - Code First
+		Entity Framework 4.1 - DbContext Data Access
+		Getting Started with Entity Framework 5
+		Entity Framework 6: Ninja Edition - What's New in EF6
+		Looking Ahead to Entity Framework 7
+		Getting Started with Entity Framework 6
+	Clean Code Book
+	Head-first design book
+* 
+
 
 Lessons Learned:
 * fn + enter is like insert on windows
+
