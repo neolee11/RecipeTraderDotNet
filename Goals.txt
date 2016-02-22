@@ -11,6 +11,8 @@ Software Requirement
 * Need to have notification system and email system in replace.
 * Use UTC time 
 
+Test from new location
+
 Practice Goals
 * TDD
 	- xUnit.Net: install xUnit packages from Nuget, and install xUnit runner for VS or for ReSharper via extensions

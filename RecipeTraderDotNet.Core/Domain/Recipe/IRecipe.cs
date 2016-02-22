@@ -30,4 +30,8 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         public DateTime TimeLastStatusChange { get; set; }
         public DateTime TimePurchased { get; set; }
     }
+
+
+
+   
 }
