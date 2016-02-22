@@ -18,5 +18,15 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.RecipeTests
             recipe.Add(new RecipeItem());
             recipe.Items.Count.ShouldEqual(1);
         }
+
+        [Fact]
+        public void ShouldAbleToSaveRecipe()
+        {
+            var recipe = new PrivateRecipe();
+            var item = new RecipeItem();
+            item.Description = "Do something";
+            recipe.Add(item);
+
+        }
     }
 }
