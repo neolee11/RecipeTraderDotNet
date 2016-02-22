@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
-    public enum RecipeVisibility
+    public enum RecipeExecutionStatus
     {
-        Private,
-        Public
+        New,
+        InProgress,
+        Done
     }
+    
 }

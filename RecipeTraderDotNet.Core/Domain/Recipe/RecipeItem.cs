@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RecipeTraderDotNet.Core.Infrastructure;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
-    public class RecipeItem
+    public class RecipeItem : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = "New Item";
-        public string Description { get; set; } = string.Empty;
-        public int Order { get; set; }
-        public RecipeStatus Status { get; set; }
+        public string Description { get; set; }
         public DateTime TimeCreated { get; set; }
         public DateTime TimeLastModified { get; set; }
+        public RecipeExecutionStatus Status { get; set; }
         public DateTime TimeLastStatusChange { get; set; }
 
         public RecipeItem()
         {
-            var now = System.DateTime.UtcNow;
-            Status = RecipeStatus.New;
+            Description = string.Empty;
+            Status = RecipeExecutionStatus.New;
 
+            var now = System.DateTime.UtcNow;
             TimeCreated = now;
             TimeLastModified = now;
             TimeLastStatusChange = now;

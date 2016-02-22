@@ -40,10 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Recipe\IRecipe.cs" />
+    <Compile Include="Domain\Recipe\IPublicRecipe.cs" />
+    <Compile Include="Domain\Recipe\IPrivateRecipe.cs" />
+    <Compile Include="Domain\Recipe\PrivateRecipe.cs" />
+    <Compile Include="Domain\Recipe\PublicRecipe.cs" />
+    <Compile Include="Domain\Recipe\RecipeBase.cs" />
     <Compile Include="Domain\Recipe\RecipeItem.cs" />
-    <Compile Include="Domain\Recipe\RecipeStatus.cs" />
-    <Compile Include="Domain\Recipe\RecipeVisibility.cs" />
+    <Compile Include="Domain\Recipe\RecipeExecutionStatus.cs" />
     <Compile Include="Infrastructure\BaseEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,7 +54,6 @@
     <Folder Include="Application\" />
     <Folder Include="Common\" />
     <Folder Include="Domain\Entity\" />
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

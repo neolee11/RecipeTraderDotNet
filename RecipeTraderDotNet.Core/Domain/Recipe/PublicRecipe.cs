@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
-    public enum RecipeStatus
+    public class PublicRecipe : RecipeBase, IPublicRecipe
     {
-        New,
-        InProgress,
-        Done
+        public double Rating { get; set; }
+        public decimal Price { get; set; }
     }
 }
