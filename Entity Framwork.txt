@@ -1,0 +1,38 @@
+EF Code First:
+
+1. create domain classes 
+2. create a context class that's inherited from DbContext class to manage your entities
+3. Setup a connection string name in context class's constructor
+4. Add conneciton string to the top level driving application's app.config or web.config (the console app, the web app) - The name should match the connection string name in context class's constructor
+5. Setup DbSet<> classes 
+
+Migration:
+1. use PM > enable-migrations 
+2. In Migrations > Configuration's constructor, set migration strategy
+3. In Migrations > Configuration's constructor, seed data
+
+Fluent API to create relationship
+1. In context's OnModelCreating method, use Fluent API to manage entity creation
+2. It's help to define a separte configuration class for each entity 
+3. Fluent relationship (must define both end of the relationship, you can define from either end)
+	Pattern: Has...With...[FK]
+	Example: 
+	ContactDetail (HasRequired) Customer (WithOptional) ContactDetail
+	Customer (HasOptional) ContactDetail (WithRequired) Customer
+
+Misc:
+1. Use virtual to make property lazy load or let context track your changes
+2. Solve disconnected db problem by using foreign key
+3. Use context.Entity<>.Load to load entity after it's already loaded in the memory
+
+
+Good EF learning site:
+http://msdn.microsoft.com/en-us/data/ee712907
+
+Fluent API configuration
+1. Mapping properties and types http://msdn.microsoft.com/en-us/data/jj591617
+2. Mapping relationships http://msdn.microsoft.com/en-us/data/jj591620
+
+Misc:
+1. About EF Proxies: http://stackoverflow.com/questions/7111109/should-i-enable-or-disable-dynamic-proxies-with-entity-framework-4-1-and-mvc3
+   - Make all properties virtual to have proxies for change tracking

@@ -8,12 +8,24 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
     public class PrivateRecipe : RecipeBase, IPrivateRecipe
     {
-        public DateTime TimePurchased { get; set; }
+        public DateTime? TimePurchased { get; set; }
         public bool IsPurchased { get; set; }
        
         //Execution
         public RecipeExecutionStatus RecipeExecutionStatus { get; set; }
         public DateTime TimeLastStatusChange { get; set; }
+
+        public PrivateRecipe()
+        {
+            var now = DateTime.Now;
+            TimeCreated = now;
+            TimeLastModified = now;
+            TimeLastStatusChange = now;
+            RecipeExecutionStatus = RecipeExecutionStatus.New;
+
+            TimePurchased = null;
+            IsPurchased = false;
+        }
 
         public void Add(RecipeItem item)
         {

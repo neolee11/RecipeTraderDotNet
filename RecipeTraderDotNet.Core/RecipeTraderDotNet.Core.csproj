@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Entity\IPrivateRecipeRepository.cs" />
+    <Compile Include="Domain\Entity\IPublicRecipeRepository.cs" />
+    <Compile Include="Domain\Entity\IRepository.cs" />
     <Compile Include="Domain\Recipe\IPublicRecipe.cs" />
     <Compile Include="Domain\Recipe\IPrivateRecipe.cs" />
     <Compile Include="Domain\Recipe\PrivateRecipe.cs" />
@@ -53,7 +56,6 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Common\" />
-    <Folder Include="Domain\Entity\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
