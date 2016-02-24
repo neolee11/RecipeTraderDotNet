@@ -4,6 +4,7 @@ using System.Linq;
 using RecipeTraderDotNet.Core.Domain.Entity;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 using RecipeTraderDotNet.Data;
+using System.Data.Entity;
 
 namespace RecipeTraderDotNet.DBAccessRepo
 {
@@ -18,12 +19,7 @@ namespace RecipeTraderDotNet.DBAccessRepo
         {
             using (var ctx = new RecipeTraderModelContext())
             {
-                var recipe = ctx.PrivateRecipes.FirstOrDefault(r => r.Id == id);
-                //if (recipe != null)
-                //{
-                //    ctx.Entry(recipe).Reference(r => r.Items).Load();
-                //}
-
+                var recipe = ctx.PrivateRecipes.Include(r => r.Items).FirstOrDefault(r => r.Id == id);
                 return recipe;
             }
         }

@@ -12,7 +12,7 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         public string Name { get; set; }
 
         //public bool IsAuthor => true; //check equality of the user name and creator
-        public virtual List<RecipeItem> Items { get; set; } = new List<RecipeItem>();
+        public List<RecipeItem> Items { get; set; } = new List<RecipeItem>(); //take virtual out since can't do lazy loading in repository functions
 
         public string Author { get; set; }
         public DateTime TimeCreated { get; set; }
