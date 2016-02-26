@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Entity\IPrivateRecipeRepository.cs" />
-    <Compile Include="Domain\Entity\IPublicRecipeRepository.cs" />
-    <Compile Include="Domain\Entity\IRepository.cs" />
+    <Compile Include="Domain\Repositories\IPrivateRecipeRepository.cs" />
+    <Compile Include="Domain\Repositories\IPublicRecipeRepository.cs" />
+    <Compile Include="Domain\Repositories\IRepository.cs" />
     <Compile Include="Domain\Recipe\IPublicRecipe.cs" />
     <Compile Include="Domain\Recipe\IPrivateRecipe.cs" />
     <Compile Include="Domain\Recipe\PrivateRecipe.cs" />

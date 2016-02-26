@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using RecipeTraderDotNet.Core.Domain.Entity;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 
 namespace RecipeTraderDotNet.ApiAccessRepo

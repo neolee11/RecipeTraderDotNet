@@ -22,6 +22,8 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.RecipeTests
         [Fact]
         public void ShouldAbleToCreatePublicRecipe()
         {
+            //var user = 
+
             var recipe = new PublicRecipe();
             //recipe.ShouldBeType(typeof (RecipeBase));
             recipe.ShouldImplement(typeof (RecipeBase));

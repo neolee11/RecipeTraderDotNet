@@ -21,7 +21,7 @@ namespace RecipeTraderDotNet.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("RecipeTraderConnStr", throwIfV1Schema: false)
         {
         }
 

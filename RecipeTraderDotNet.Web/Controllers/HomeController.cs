@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using RecipeTraderDotNet.Core.Domain.Entity;
 using RecipeTraderDotNet.Core.Domain.Recipe;
+using RecipeTraderDotNet.Core.Domain.Repositories;
 using RecipeTraderDotNet.DBAccessRepo;
 
 namespace RecipeTraderDotNet.Web.Controllers

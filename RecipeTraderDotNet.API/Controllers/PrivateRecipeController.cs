@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using RecipeTraderDotNet.Core.Domain.Entity;
+using RecipeTraderDotNet.Core.Domain.Repositories;
 using RecipeTraderDotNet.DBAccessRepo;
 
 namespace RecipeTraderDotNet.API.Controllers

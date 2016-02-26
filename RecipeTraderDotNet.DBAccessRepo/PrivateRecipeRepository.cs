@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RecipeTraderDotNet.Core.Domain.Entity;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 using RecipeTraderDotNet.Data;
 using System.Data.Entity;
+using RecipeTraderDotNet.Core.Domain.Repositories;
 
 namespace RecipeTraderDotNet.DBAccessRepo
 {
