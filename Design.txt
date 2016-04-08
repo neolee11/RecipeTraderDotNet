@@ -1,6 +1,0 @@
-To Dos:
-
-*
-* second Test change 
-* third test
-* using mycommit to check in

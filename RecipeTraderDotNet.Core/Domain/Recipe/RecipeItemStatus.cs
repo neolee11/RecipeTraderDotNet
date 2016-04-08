@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
-    public interface IPrivateRecipe
+    public enum RecipeItemStatus
     {
-        void Add(RecipeItem item);
-        void Insert(RecipeItem item, int index);
-        void Remove(RecipeItem item);
-        void Clear();
+        New,
+        Done
     }
-   
+    
 }

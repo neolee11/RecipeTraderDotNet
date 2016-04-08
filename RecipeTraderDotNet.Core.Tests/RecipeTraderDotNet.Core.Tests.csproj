@@ -70,8 +70,9 @@
   <ItemGroup>
     <Compile Include="DomainTests\RecipeTests\PrivateRecipeTests.cs" />
     <Compile Include="DomainTests\RecipeTests\PublicRecipeTests.cs" />
-    <Compile Include="DomainTests\RecipeTests\RecipeTests.cs" />
+    <Compile Include="DomainTests\RecipeTests\RecipeItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -86,6 +87,9 @@
       <Project>{10f03353-8a59-4872-907c-95ce5fd17b9a}</Project>
       <Name>RecipeTraderDotNet.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

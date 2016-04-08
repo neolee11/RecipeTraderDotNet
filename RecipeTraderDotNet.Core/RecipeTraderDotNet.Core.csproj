@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Market\IMarket.cs" />
+    <Compile Include="Domain\Market\Market.cs" />
+    <Compile Include="Domain\Market\UserReview.cs" />
+    <Compile Include="Domain\Recipe\RecipePurchaseInformation.cs" />
     <Compile Include="Domain\Repositories\IPrivateRecipeRepository.cs" />
     <Compile Include="Domain\Repositories\IPublicRecipeRepository.cs" />
     <Compile Include="Domain\Repositories\IRepository.cs" />
@@ -49,7 +53,9 @@
     <Compile Include="Domain\Recipe\PublicRecipe.cs" />
     <Compile Include="Domain\Recipe\RecipeBase.cs" />
     <Compile Include="Domain\Recipe\RecipeItem.cs" />
-    <Compile Include="Domain\Recipe\RecipeExecutionStatus.cs" />
+    <Compile Include="Domain\Recipe\RecipeItemStatus.cs" />
+    <Compile Include="Domain\User\MoneyAccount.cs" />
+    <Compile Include="Domain\User\UserContext.cs" />
     <Compile Include="Infrastructure\BaseEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
