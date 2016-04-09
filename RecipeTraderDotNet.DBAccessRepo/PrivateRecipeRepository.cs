@@ -42,5 +42,10 @@ namespace RecipeTraderDotNet.DBAccessRepo
         {
             throw new NotImplementedException();
         }
+
+        public List<PrivateRecipe> GetUserRecipes(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

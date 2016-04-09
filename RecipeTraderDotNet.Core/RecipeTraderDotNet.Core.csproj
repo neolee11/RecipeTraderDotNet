@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="Domain\Market\IMarket.cs" />
     <Compile Include="Domain\Market\Market.cs" />
+    <Compile Include="Domain\Market\SystemInfo.cs" />
     <Compile Include="Domain\Recipe\UserReview.cs" />
     <Compile Include="Domain\Recipe\RecipePurchaseInformation.cs" />
+    <Compile Include="Domain\Repositories\IMoneyAccountRepository.cs" />
     <Compile Include="Domain\Repositories\IPrivateRecipeRepository.cs" />
     <Compile Include="Domain\Repositories\IPublicRecipeRepository.cs" />
     <Compile Include="Domain\Repositories\IRepository.cs" />

@@ -2,5 +2,6 @@
 {
     public class MoneyAccount
     {
+        public decimal Balance { get; set; }
     }
 }

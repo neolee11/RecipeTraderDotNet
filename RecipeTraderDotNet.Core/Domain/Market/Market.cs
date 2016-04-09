@@ -12,10 +12,12 @@ namespace RecipeTraderDotNet.Core.Domain.Market
     public class Market : IMarket
     {
         private readonly IPublicRecipeRepository _publicRecipeRepo;
+        private readonly IMoneyAccountRepository _moneyAccountRepo;
 
-        public Market(IPublicRecipeRepository publicRecipeRepo)
+        public Market(IPublicRecipeRepository publicRecipeRepo, IMoneyAccountRepository moneyAccountRepo)
         {
             _publicRecipeRepo = publicRecipeRepo;
+            _moneyAccountRepo = moneyAccountRepo;
         }
 
         public List<PublicRecipe> GetAllRecipes()
@@ -52,7 +54,18 @@ namespace RecipeTraderDotNet.Core.Domain.Market
         public PrivateRecipe Purchase(int publicRecipeId)
         {
             //money transaction should take place
+            //todo: system charges money for transaction
             throw new NotImplementedException();
+        }
+
+        public SystemInfo GetSystemInfo()
+        {
+            var info = new SystemInfo();
+            var allAccounts = _moneyAccountRepo.GetAll();
+
+            info.TotalUsers = allAccounts.Count;
+            info.TotalCurrency = allAccounts.Sum(a => a.Balance);
+            return info;
         }
     }
 }

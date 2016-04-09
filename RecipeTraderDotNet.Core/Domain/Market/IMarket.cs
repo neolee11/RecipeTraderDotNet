@@ -10,5 +10,6 @@ namespace RecipeTraderDotNet.Core.Domain.Market
         bool TakeDown(int publicRecipeId, string requestUserId);
         void Review(int publicRecipeId, UserReview review);
         PrivateRecipe Purchase(int publicRecipeId);
+        SystemInfo GetSystemInfo();
     }
 }
