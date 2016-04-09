@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using RecipeTraderDotNet.Core.Infrastructure;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
+    [Serializable]
     public class RecipeItem : BaseEntity
     {
+        public RecipeBase ParentRecipe { get; set; } //navigation property
+
         private string _description;
         public string Description
         {
@@ -19,9 +24,6 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
                 ParentRecipe.TimeLastModified = DateTime.UtcNow;
             }
         }
-
-        public RecipeBase ParentRecipe { get; }
-
         public DateTime TimeCreated { get; set; } = DateTime.UtcNow;
         public RecipeItemStatus Status { get; set; } = RecipeItemStatus.New;
         public DateTime TimeLastStatusChange { get; set; } = DateTime.UtcNow;
@@ -31,6 +33,29 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         {
             _description = description;
             ParentRecipe = parentRecipe;
+        }
+
+        public RecipeItem DeepCopy(bool keepId = true, RecipeBase newParent = null)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                if (this.GetType().IsSerializable)
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(stream, this);
+                    stream.Position = 0;
+                    var newObj = (RecipeItem)formatter.Deserialize(stream);
+
+                    if (!keepId)
+                        newObj.Id = 0;
+
+                    if (newParent != null)
+                        newObj.ParentRecipe = newParent;
+
+                    return newObj;
+                }
+                return null;
+            }
         }
 
         public void Finish()
@@ -44,5 +69,7 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             this.Status = RecipeItemStatus.New;
             this.TimeLastStatusChange = DateTime.UtcNow;
         }
+
+      
     }
 }

@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainTests\MarketTests\MarketTests.cs" />
     <Compile Include="DomainTests\RecipeTests\PrivateRecipeTests.cs" />
     <Compile Include="DomainTests\RecipeTests\PublicRecipeTests.cs" />
     <Compile Include="DomainTests\RecipeTests\RecipeItemTests.cs" />

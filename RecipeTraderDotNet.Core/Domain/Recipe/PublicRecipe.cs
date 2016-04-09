@@ -7,6 +7,7 @@ using RecipeTraderDotNet.Core.Domain.Market;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
+    [Serializable]
     public class PublicRecipe : RecipeBase, IPublicRecipe
     {
         public double OverallRating
@@ -20,5 +21,22 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
 
         public List<UserReview> Reviews { get; set; }
         public decimal Price { get; set; }
+
+        public PublicRecipe()
+        {
+        }
+
+        public PublicRecipe(PrivateRecipe privateRecipe, decimal price)
+        {
+            if(privateRecipe == null) return;
+
+            this.Title = privateRecipe.Title;
+            this.Author = privateRecipe.Author;
+            this.TimeCreated = privateRecipe.TimeCreated;
+            this.TimeLastModified = privateRecipe.TimeLastModified;
+            this.Items = privateRecipe.Items.ConvertAll(item => item.DeepCopy(false, this));
+            this.Price = price > 0 ? price : 1; //set to $1 by default
+        }
+
     }
 }

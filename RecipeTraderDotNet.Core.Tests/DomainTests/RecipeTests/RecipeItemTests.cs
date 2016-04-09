@@ -74,5 +74,56 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.RecipeTests
 
             newTime.ShouldNotEqual(oldTime);
         }
+
+        [Fact]
+        public void DeepCopyShouldMakeANewCopy()
+        {
+            var realRecipe = new PrivateRecipe("author", "title");
+            realRecipe.Id = 100;
+            var sut = new RecipeItem(_description, realRecipe);
+            sut.Id = 200;
+
+            var newObj = sut.DeepCopy(keepId: true);
+
+            newObj.Id.ShouldEqual(sut.Id);
+            newObj.Description.ShouldEqual(sut.Description);
+            newObj.ParentRecipe.Id.ShouldEqual(sut.ParentRecipe.Id);
+
+            sut.Description = "Something else";
+            newObj.Description.ShouldNotEqual(sut.Description);
+
+            sut.Status = RecipeItemStatus.Done;
+            newObj.Status.ShouldNotEqual(sut.Status);
+        }
+
+        [Fact]
+        public void DeepCopyNotKeepIdShouldSetIdToZero()
+        {
+            var realRecipe = new PrivateRecipe("author", "title");
+            realRecipe.Id = 100;
+            var sut = new RecipeItem(_description, realRecipe);
+            sut.Id = 200;
+
+            var newObj = sut.DeepCopy(keepId: false);
+
+            newObj.Id.ShouldNotEqual(sut.Id);
+            newObj.Id.ShouldEqual(0);
+        }
+
+        [Fact]
+        public void DeepCopySetNewParentShouldSetNewParent()
+        {
+            var realRecipe = new PrivateRecipe("author", "title");
+            realRecipe.Id = 100;
+            var sut = new RecipeItem(_description, realRecipe);
+            sut.Id = 200;
+            var newRecipe = new PrivateRecipe("author2", "title2");
+            newRecipe.Id = realRecipe.Id + 10;
+
+            var newObj = sut.DeepCopy(newParent:newRecipe);
+
+            newObj.ParentRecipe.Id.ShouldNotEqual(sut.ParentRecipe.Id);
+            newObj.ParentRecipe.Id.ShouldEqual(newRecipe.Id);
+        }
     }
 }

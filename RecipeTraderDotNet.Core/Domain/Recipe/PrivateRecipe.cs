@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecipeTraderDotNet.Core.Domain.Recipe
 {
+    [Serializable]
     public class PrivateRecipe : RecipeBase, IPrivateRecipe
     {
         public RecipePurchaseInformation RecipePurchaseInformation { get; set; } = null;

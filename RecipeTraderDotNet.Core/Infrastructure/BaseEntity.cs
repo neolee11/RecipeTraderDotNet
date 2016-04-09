@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecipeTraderDotNet.Core.Infrastructure
 {
+    [Serializable]
     public abstract class BaseEntity
     {
         /// <summary>
