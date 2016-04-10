@@ -174,7 +174,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PrivateRecipeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,10 +233,6 @@
     <ProjectReference Include="..\RecipeTraderDotNet.Core\RecipeTraderDotNet.Core.csproj">
       <Project>{10f03353-8a59-4872-907c-95ce5fd17b9a}</Project>
       <Name>RecipeTraderDotNet.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RecipeTraderDotNet.DBAccessRepo\RecipeTraderDotNet.DBAccessRepo.csproj">
-      <Project>{e3d36fe2-50cc-47ee-92ae-5c57550c6672}</Project>
-      <Name>RecipeTraderDotNet.DBAccessRepo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

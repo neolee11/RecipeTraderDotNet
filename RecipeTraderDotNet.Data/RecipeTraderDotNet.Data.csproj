@@ -66,15 +66,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecipeTraderModelContext.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="RecipeTrader.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RecipeTrader_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>RecipeTrader.mdf</DependentUpon>
-    </Content>
+    <Compile Include="Repositories\Memory\MoneyAccountRepository.cs" />
+    <Compile Include="Repositories\Memory\PrivateRecipeRepository.cs" />
+    <Compile Include="Repositories\Memory\PublicRecipeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -97,6 +91,9 @@
       <Project>{10f03353-8a59-4872-907c-95ce5fd17b9a}</Project>
       <Name>RecipeTraderDotNet.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\SqlServer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
