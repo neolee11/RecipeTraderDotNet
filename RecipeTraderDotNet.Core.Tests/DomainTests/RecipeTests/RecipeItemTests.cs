@@ -125,5 +125,27 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.RecipeTests
             newObj.ParentRecipe.Id.ShouldNotEqual(sut.ParentRecipe.Id);
             newObj.ParentRecipe.Id.ShouldEqual(newRecipe.Id);
         }
+
+        [Fact]
+        public void SystemCopyShouldDoDeepCopy()
+        {
+            var realRecipe = new PrivateRecipe("author", "title");
+            realRecipe.Id = 100;
+            var sut = new RecipeItem(_description, realRecipe);
+            sut.Id = 200;
+
+            var newObj = sut.Copy();
+            
+            newObj.Id.ShouldEqual(sut.Id);
+            newObj.Description.ShouldEqual(sut.Description);
+            newObj.ParentRecipe.Id.ShouldEqual(sut.ParentRecipe.Id);
+
+            sut.Description = "Something else";
+            newObj.Description.ShouldNotEqual(sut.Description);
+
+            sut.Status = RecipeItemStatus.Done;
+            newObj.Status.ShouldNotEqual(sut.Status);
+
+        }
     }
 }

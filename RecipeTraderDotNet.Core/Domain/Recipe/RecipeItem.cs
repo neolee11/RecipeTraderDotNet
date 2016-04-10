@@ -35,7 +35,7 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             ParentRecipe = parentRecipe;
         }
 
-        public RecipeItem DeepCopy(bool keepId = true, RecipeBase newParent = null)
+        public RecipeItem DeepCopyUsingSerialization(bool keepId = true, RecipeBase newParent = null)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -56,6 +56,24 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
                 }
                 return null;
             }
+        }
+
+        public RecipeItem DeepCopy(bool keepId = true, RecipeBase newParent = null)
+        {
+            var newObj = this.Copy();
+
+            if (newObj == null) return null;
+
+            newObj.Status = RecipeItemStatus.New;
+            newObj.TimeLastStatusChange = DateTime.UtcNow;
+
+            if (!keepId)
+                newObj.Id = 0;
+
+            if (newParent != null)
+                newObj.ParentRecipe = newParent;
+
+            return newObj;
         }
 
         public void Finish()

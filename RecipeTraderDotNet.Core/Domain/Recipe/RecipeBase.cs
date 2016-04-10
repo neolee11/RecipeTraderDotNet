@@ -13,8 +13,8 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         public string Title { get; set; } //For public recipe, name should be CreatorAccount/RecipeName
         public string Author { get; set; }
         public List<RecipeItem> Items { get; set; } = new List<RecipeItem>(); //take virtual out since can't do lazy loading in repository functions
-        public DateTime TimeCreated { get; set; } = DateTime.UtcNow;
-        public virtual DateTime TimeLastModified { get;  set; } = DateTime.UtcNow; //last time a recipe is changed, added/remove/edit item, etc NOT an item's status change. Make virtual so Moq can test
+        public DateTime TimeCreated { get; set; } = DateTime.UtcNow;       
+        public virtual DateTime TimeLastModified { get; set; } = DateTime.UtcNow; //last time a recipe is changed, added/remove/edit item, etc NOT an item's status change. Make virtual so Moq can test
     }
 
 }

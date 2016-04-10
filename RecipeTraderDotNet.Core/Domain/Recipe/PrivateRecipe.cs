@@ -9,8 +9,8 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
     [Serializable]
     public class PrivateRecipe : RecipeBase, IPrivateRecipe
     {
-        public RecipePurchaseInformation RecipePurchaseInformation { get; set; } = null;
-        public bool IsPurchased => RecipePurchaseInformation != null;
+        public RecipePurchaseInformation PurchaseInformation { get; set; } = null;
+        public bool IsPurchased => PurchaseInformation != null;
         public string RecipeStatus
         {
             get
@@ -42,6 +42,18 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             this.Title = title;
         }
 
+        public static PrivateRecipe ConvertFromPublicRecipe(PublicRecipe publicRecipe)
+        {
+            var privateRecipe = new PrivateRecipe(publicRecipe.Author, publicRecipe.Title);
+            privateRecipe.Items = publicRecipe.Items.ConvertAll(item => item.DeepCopy(false, privateRecipe));
+            privateRecipe.TimeCreated = publicRecipe.TimeCreated;
+            privateRecipe.TimeLastModified = publicRecipe.TimeLastModified;
+
+          
+
+            return privateRecipe;
+        }
+
         public void Add(RecipeItem item)
         {
             this.Items.Add(item);
@@ -67,5 +79,5 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         }
     }
 
-  
+
 }

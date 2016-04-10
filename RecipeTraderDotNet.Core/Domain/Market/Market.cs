@@ -25,37 +25,91 @@ namespace RecipeTraderDotNet.Core.Domain.Market
             return _publicRecipeRepo.GetAll();
         }
 
-        public bool Publish(PrivateRecipe privateRecipe, decimal price)
+        public string Sell(PrivateRecipe privateRecipe, decimal price)
         {
-            var pubR = new PublicRecipe(privateRecipe, price);
+            //Check if user already sold this recipe
+            var existingRecipe = _publicRecipeRepo.GetByUserIdAndTitle(privateRecipe.Author, privateRecipe.Title);
+            if (existingRecipe != null) return "You alreayd sold this recipe before";
+
+            var pubR = PublicRecipe.ConvertFromPrivateRecipe(privateRecipe);
+            pubR.Price = price;
+            pubR.TimePublished = DateTime.UtcNow;
+
             _publicRecipeRepo.Insert(pubR);
-            return true;
+            return string.Empty;
         }
       
-        public bool TakeDown(int publicRecipeId, string requestUserId)
+        public string TakeDown(int publicRecipeId, string requestUserId)
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
             if (pubR.Author == requestUserId)
             {
                 _publicRecipeRepo.Delete(publicRecipeId);
+                return String.Empty;
             }
-            
-            return true;
+            else
+            {
+                return "Cannot take down other people's recipe in the Market";
+            }
         }
 
-        public void Review(int publicRecipeId, UserReview review)
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="publicRecipeId"></param>
+        /// <param name="reviewerUserId"></param>
+        /// <param name="rating"></param>
+        /// <param name="comment"></param>
+        /// <param name="requestUserId"></param>
+        /// <returns>Any error message. Empty message indicates success</returns>
+        public string Review(int publicRecipeId, string reviewerUserId, int rating, string comment)
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
-            if (pubR.Reviews == null) pubR.Reviews = new List<UserReview>();
-            pubR.Reviews.Add(review);
+            if (pubR.Author == reviewerUserId) return "Recipe author cannot review his/her own recipe";
 
+            var review = new UserReview
+            {
+               ReviewerUserId = reviewerUserId,
+               Rating = rating,
+               Comment = comment,
+               PublicRecipe = pubR
+            };
+
+            pubR.AddReview(review);
+            _publicRecipeRepo.Update(pubR);  //Save entire graph of data
+            return string.Empty;
         }
 
-        public PrivateRecipe Purchase(int publicRecipeId)
+        public PrivateRecipe Purchase(int publicRecipeId, string requestUserId)
         {
-            //money transaction should take place
-            //todo: system charges money for transaction
-            throw new NotImplementedException();
+            var pubR = _publicRecipeRepo.GetById(publicRecipeId);
+            var privateRecipe = PrivateRecipe.ConvertFromPublicRecipe(pubR);
+            privateRecipe.PurchaseInformation = new RecipePurchaseInformation
+            {
+                PrivateRecipe = privateRecipe,
+                OriginalMarketRecipe = pubR,
+                TimePurchased = DateTime.UtcNow
+            };
+
+            if (pubR.Author != requestUserId)
+            {
+                //money transaction takes place
+                var purchaserAccount = _moneyAccountRepo.GetUserMoneyAccount(requestUserId);
+                var sellerAccount = _moneyAccountRepo.GetUserMoneyAccount(pubR.Author);
+                var price = pubR.Price;
+
+                if (purchaserAccount.Balance < price) return null;
+
+                purchaserAccount.Balance -= price;
+                sellerAccount.Balance += price;
+
+                _moneyAccountRepo.Update(purchaserAccount);
+                _moneyAccountRepo.Update(sellerAccount);
+
+                //todo: system charges money for transaction
+            }
+
+            return privateRecipe;
         }
 
         public SystemInfo GetSystemInfo()

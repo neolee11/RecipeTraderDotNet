@@ -1,0 +1,28 @@
+Type of objects:
+*: PrivateRecipe with purchaseInformation
+*: PublicRecipe with review
+*: RecipeItem
+*: Market
+*: UserContext 
+*: MoneyAccount
+*: Repos
+
+User Commands:
+* create new user - application level, auto giving $100 moneyaccount
+* log in as user
+
+* list all my recipes
+* list one recipe (by id or fuzzy name)
+* create recipe
+* edit recipe (by id or fuzzy name)
+* remove recipe (by id)
+
+* Sell recipe 
+* take down recipe
+
+* list all market recipes
+* purchase recipe
+* review recipe
+
+* list my balance 
+* view system balance

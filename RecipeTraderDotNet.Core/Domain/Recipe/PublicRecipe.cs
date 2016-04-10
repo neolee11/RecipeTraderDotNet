@@ -18,24 +18,29 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
                 return Reviews.Sum(r => r.Rating) / Reviews.Count;
             }
         } 
-
         public List<UserReview> Reviews { get; set; }
         public decimal Price { get; set; }
-
-        public PublicRecipe()
+        public DateTime TimePublished { get; set; }
+       
+        public static PublicRecipe ConvertFromPrivateRecipe(PrivateRecipe privateRecipe)
         {
+            if (privateRecipe == null) return null;
+
+            var pubRecipe = new PublicRecipe();
+            pubRecipe.Title = privateRecipe.Title;
+            pubRecipe.Author = privateRecipe.Author;
+            pubRecipe.TimeCreated = privateRecipe.TimeCreated;
+            pubRecipe.TimeLastModified = privateRecipe.TimeLastModified;
+            pubRecipe.Items = privateRecipe.Items.ConvertAll(item => item.DeepCopy(false, pubRecipe));
+
+            return pubRecipe;
         }
 
-        public PublicRecipe(PrivateRecipe privateRecipe, decimal price)
+        public bool AddReview(UserReview review)
         {
-            if(privateRecipe == null) return;
-
-            this.Title = privateRecipe.Title;
-            this.Author = privateRecipe.Author;
-            this.TimeCreated = privateRecipe.TimeCreated;
-            this.TimeLastModified = privateRecipe.TimeLastModified;
-            this.Items = privateRecipe.Items.ConvertAll(item => item.DeepCopy(false, this));
-            this.Price = price > 0 ? price : 1; //set to $1 by default
+            if (this.Reviews == null) this.Reviews = new List<UserReview>();
+            this.Reviews.Add(review);
+            return true;
         }
 
     }

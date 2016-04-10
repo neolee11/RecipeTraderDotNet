@@ -6,10 +6,10 @@ namespace RecipeTraderDotNet.Core.Domain.Market
     public interface IMarket
     {
         List<PublicRecipe> GetAllRecipes();
-        bool Publish(PrivateRecipe privateRecipe, decimal price);
-        bool TakeDown(int publicRecipeId, string requestUserId);
-        void Review(int publicRecipeId, UserReview review);
-        PrivateRecipe Purchase(int publicRecipeId);
+        string Sell(PrivateRecipe privateRecipe, decimal price);
+        PrivateRecipe Purchase(int publicRecipeId, string requestUserId);
+        string Review(int publicRecipeId, string reviewerUserId, int rating, string comment);
+        string TakeDown(int publicRecipeId, string requestUserId);
         SystemInfo GetSystemInfo();
     }
 }
