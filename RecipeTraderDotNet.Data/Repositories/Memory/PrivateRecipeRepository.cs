@@ -10,34 +10,48 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 {
     public class PrivateRecipeRepository : IPrivateRecipeRepository
     {
+        private readonly List<PrivateRecipe> _currentPrivateRecipeState;
+
+        public PrivateRecipeRepository(List<PrivateRecipe> currentPrivateRecipeState)
+        {
+            _currentPrivateRecipeState = currentPrivateRecipeState;
+        }
+
         public List<PrivateRecipe> GetAll()
         {
-            throw new NotImplementedException();
+            return _currentPrivateRecipeState;
         }
 
         public PrivateRecipe GetById(int id)
         {
-            throw new NotImplementedException();
+            return _currentPrivateRecipeState.SingleOrDefault(a => a.Id == id);
         }
 
         public void Insert(PrivateRecipe t)
         {
-            throw new NotImplementedException();
+            _currentPrivateRecipeState.Add(t);
         }
 
         public void Update(PrivateRecipe t)
         {
-            throw new NotImplementedException();
+            var existing = _currentPrivateRecipeState.SingleOrDefault(a => a.Id == t.Id);
+
+            if (existing != null)
+            {
+                _currentPrivateRecipeState.Remove(existing);
+                _currentPrivateRecipeState.Add(t);
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var existing = _currentPrivateRecipeState.SingleOrDefault(a => a.Id == id);
+            if (existing != null) _currentPrivateRecipeState.Remove(existing);
         }
 
         public List<PrivateRecipe> GetUserRecipes(string userId)
         {
-            throw new NotImplementedException();
+            return _currentPrivateRecipeState.Where(r => r.Author == userId).ToList();
         }
     }
 }

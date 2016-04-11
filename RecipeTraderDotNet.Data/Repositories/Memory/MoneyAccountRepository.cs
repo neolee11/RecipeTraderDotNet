@@ -10,34 +10,47 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 {
     public class MoneyAccountRepository : IMoneyAccountRepository
     {
+        private List<MoneyAccount> _currentMoneyAccountState;
+
+        public MoneyAccountRepository(List<MoneyAccount> currentMoneyAccountState)
+        {
+            _currentMoneyAccountState = currentMoneyAccountState;
+        }
+
         public List<MoneyAccount> GetAll()
         {
-            throw new NotImplementedException();
+            return _currentMoneyAccountState;
         }
 
         public MoneyAccount GetById(int id)
         {
-            throw new NotImplementedException();
+            return _currentMoneyAccountState.SingleOrDefault(a => a.Id == id);
         }
 
         public void Insert(MoneyAccount t)
         {
-            throw new NotImplementedException();
+            _currentMoneyAccountState.Add(t);
         }
 
         public void Update(MoneyAccount t)
         {
-            throw new NotImplementedException();
+            var existing = _currentMoneyAccountState.SingleOrDefault(a => a.Id == t.Id);
+            if (existing != null)
+            {
+                existing.UserId = t.UserId;
+                existing.Balance = t.Balance;
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var existing = _currentMoneyAccountState.SingleOrDefault(a => a.Id == id);
+            if (existing != null) _currentMoneyAccountState.Remove(existing);
         }
 
         public MoneyAccount GetUserMoneyAccount(string userId)
         {
-            throw new NotImplementedException();
+            return _currentMoneyAccountState.SingleOrDefault(a => a.UserId == userId);
         }
     }
 }

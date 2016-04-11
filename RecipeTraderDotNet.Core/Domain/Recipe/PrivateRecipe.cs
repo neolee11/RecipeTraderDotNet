@@ -36,6 +36,10 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             }
         }
 
+        public PrivateRecipe()
+        {
+        }
+
         public PrivateRecipe(string authorName, string title)
         {
             this.Author = authorName;

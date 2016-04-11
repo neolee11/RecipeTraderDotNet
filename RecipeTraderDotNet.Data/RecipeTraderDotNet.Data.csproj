@@ -69,6 +69,8 @@
     <Compile Include="Repositories\Memory\MoneyAccountRepository.cs" />
     <Compile Include="Repositories\Memory\PrivateRecipeRepository.cs" />
     <Compile Include="Repositories\Memory\PublicRecipeRepository.cs" />
+    <Compile Include="Repositories\SqlServer\MoneyAccountRepository.cs" />
+    <Compile Include="Utilities\DomainEntityMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -92,9 +94,7 @@
       <Name>RecipeTraderDotNet.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\SqlServer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

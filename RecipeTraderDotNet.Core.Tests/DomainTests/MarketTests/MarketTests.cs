@@ -14,7 +14,7 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.MarketTests
     public class MarketTests
     {
         [Fact]
-        public void PublishShouldAddPrivateRecipeToPublicRecipeList()
+        public void PublishShouldAddPrivateRecipeToPublicRecipeList() 
         {
             var mockPublicRecipeRepo = new Mock<IPublicRecipeRepository>();
             var mockMoneyAccoutRepo = new Mock<IMoneyAccountRepository>();

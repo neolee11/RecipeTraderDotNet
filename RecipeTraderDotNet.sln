@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTraderDotNet.Data", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTraderDotNet.API", "RecipeTraderDotNet.API\RecipeTraderDotNet.API.csproj", "{F771928A-B40C-4105-A834-B51F23E1B457}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTraderDotNet.Data.Tests", "RecipeTraderDotNet.Data.Tests\RecipeTraderDotNet.Data.Tests.csproj", "{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,11 +44,16 @@ Global
 		{F771928A-B40C-4105-A834-B51F23E1B457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F771928A-B40C-4105-A834-B51F23E1B457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F771928A-B40C-4105-A834-B51F23E1B457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4B83A64A-5DE9-4AFA-9343-4092B8A78DE0} = {8AC7EEAC-1854-4CF7-83F5-DF21F30F84D8}
+		{3C28F9C6-F62C-4B63-BE19-00435CBA4B5A} = {8AC7EEAC-1854-4CF7-83F5-DF21F30F84D8}
 	EndGlobalSection
 EndGlobal
