@@ -40,10 +40,10 @@ namespace RecipeTraderDotNet.Core.Domain.User
             return _moneyAccountRepo.GetUserMoneyAccount(UserId);
         }
 
-        public string SellRecipe(int privateRecipeId, decimal price)
+        public string PublishRecipe(int privateRecipeId, decimal price)
         {
             var recipe = _privateRecipeRepo.GetById(privateRecipeId);
-            return _market.Sell(recipe, price);
+            return _market.Publish(recipe, price);
         }
 
         public string ReviewRecipe(int publicRecipeId, int rating, string comment)
@@ -53,7 +53,7 @@ namespace RecipeTraderDotNet.Core.Domain.User
 
         public string PurchaseRecipe(int publicRecipeId)
         {
-            //check if you already purcahse this recipe before
+            //check if you already purchase this recipe before
             var publicRecipe = _publicRecipeRepo.GetById(publicRecipeId);
             var allMyRecipes = _privateRecipeRepo.GetUserRecipes(UserId);
             if (allMyRecipes.Exists(r => r.Author == publicRecipe.Author && r.Title == publicRecipe.Title))

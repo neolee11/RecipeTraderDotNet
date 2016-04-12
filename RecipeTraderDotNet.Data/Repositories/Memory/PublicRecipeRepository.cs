@@ -10,34 +10,50 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 {
     public class PublicRecipeRepository : IPublicRecipeRepository
     {
+        private readonly List<PublicRecipe> _currentPublicRecipeState;
+
+        public PublicRecipeRepository(List<PublicRecipe> currentPublicRecipeState)
+        {
+            _currentPublicRecipeState = currentPublicRecipeState;
+        }
+
         public List<PublicRecipe> GetAll()
         {
-            throw new NotImplementedException();
+            return _currentPublicRecipeState;
         }
 
         public PublicRecipe GetById(int id)
         {
-            throw new NotImplementedException();
+            return _currentPublicRecipeState.SingleOrDefault(a => a.Id == id);
         }
 
         public void Insert(PublicRecipe t)
         {
-            throw new NotImplementedException();
+            if (_currentPublicRecipeState.Exists(r => r.Author == t.Author && r.Title == t.Title)) return;
+
+            _currentPublicRecipeState.Add(t);
         }
 
         public void Update(PublicRecipe t)
         {
-            throw new NotImplementedException();
+            var existing = _currentPublicRecipeState.SingleOrDefault(a => a.Id == t.Id);
+
+            if (existing != null)
+            {
+                _currentPublicRecipeState.Remove(existing);
+                _currentPublicRecipeState.Add(t);
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var existing = _currentPublicRecipeState.SingleOrDefault(a => a.Id == id);
+            if (existing != null) _currentPublicRecipeState.Remove(existing);
         }
 
         public PublicRecipe GetByUserIdAndTitle(string userId, string title)
         {
-            throw new NotImplementedException();
+            return _currentPublicRecipeState.SingleOrDefault(r => r.Author == userId && r.Title == title);
         }
     }
 }

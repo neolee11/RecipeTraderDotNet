@@ -25,11 +25,14 @@ namespace RecipeTraderDotNet.Core.Domain.Market
             return _publicRecipeRepo.GetAll();
         }
 
-        public string Sell(PrivateRecipe privateRecipe, decimal price)
+        public string Publish(PrivateRecipe privateRecipe, decimal price)
         {
+            if (privateRecipe == null) return "The recipe does not exist";
+            price = price <= 0 ? 1 : price;
+
             //Check if user already sold this recipe
             var existingRecipe = _publicRecipeRepo.GetByUserIdAndTitle(privateRecipe.Author, privateRecipe.Title);
-            if (existingRecipe != null) return "You alreayd sold this recipe before";
+            if (existingRecipe != null) return "This recipe has been published already.";
 
             var pubR = PublicRecipe.ConvertFromPrivateRecipe(privateRecipe);
             pubR.Price = price;
@@ -38,19 +41,38 @@ namespace RecipeTraderDotNet.Core.Domain.Market
             _publicRecipeRepo.Insert(pubR);
             return string.Empty;
         }
-      
-        public string TakeDown(int publicRecipeId, string requestUserId)
+
+        public PrivateRecipe Purchase(int publicRecipeId, string requestUserId)
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
-            if (pubR.Author == requestUserId)
+            var privateRecipe = PrivateRecipe.ConvertFromPublicRecipe(pubR);
+            privateRecipe.PurchaseInformation = new RecipePurchaseInformation
             {
-                _publicRecipeRepo.Delete(publicRecipeId);
-                return String.Empty;
-            }
-            else
+                PrivateRecipe = privateRecipe,
+                OriginalMarketRecipe = pubR,
+                TimePurchased = DateTime.UtcNow
+            };
+
+            if (pubR.Author != requestUserId)
             {
-                return "Cannot take down other people's recipe in the Market";
+                //money transaction takes place
+                var purchaserAccount = _moneyAccountRepo.GetUserMoneyAccount(requestUserId);
+                var sellerAccount = _moneyAccountRepo.GetUserMoneyAccount(pubR.Author);
+
+                if (purchaserAccount == null || sellerAccount == null) return null;
+
+                var price = pubR.Price;
+                if (purchaserAccount.Balance < price) return null;
+                purchaserAccount.Balance -= price;
+                sellerAccount.Balance += price;
+
+                _moneyAccountRepo.Update(purchaserAccount);
+                _moneyAccountRepo.Update(sellerAccount);
+
+                //todo: system charges money for transaction
             }
+
+            return privateRecipe;
         }
 
         /// <summary>
@@ -80,36 +102,18 @@ namespace RecipeTraderDotNet.Core.Domain.Market
             return string.Empty;
         }
 
-        public PrivateRecipe Purchase(int publicRecipeId, string requestUserId)
+        public string TakeDown(int publicRecipeId, string requestUserId)
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
-            var privateRecipe = PrivateRecipe.ConvertFromPublicRecipe(pubR);
-            privateRecipe.PurchaseInformation = new RecipePurchaseInformation
+            if (pubR.Author == requestUserId)
             {
-                PrivateRecipe = privateRecipe,
-                OriginalMarketRecipe = pubR,
-                TimePurchased = DateTime.UtcNow
-            };
-
-            if (pubR.Author != requestUserId)
-            {
-                //money transaction takes place
-                var purchaserAccount = _moneyAccountRepo.GetUserMoneyAccount(requestUserId);
-                var sellerAccount = _moneyAccountRepo.GetUserMoneyAccount(pubR.Author);
-                var price = pubR.Price;
-
-                if (purchaserAccount.Balance < price) return null;
-
-                purchaserAccount.Balance -= price;
-                sellerAccount.Balance += price;
-
-                _moneyAccountRepo.Update(purchaserAccount);
-                _moneyAccountRepo.Update(sellerAccount);
-
-                //todo: system charges money for transaction
+                _publicRecipeRepo.Delete(publicRecipeId);
+                return String.Empty;
             }
-
-            return privateRecipe;
+            else
+            {
+                return "Cannot take down other people's recipe in the Market";
+            }
         }
 
         public SystemInfo GetSystemInfo()

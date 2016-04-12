@@ -7,7 +7,7 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 using RecipeTraderDotNet.Data.Repositories.Memory;
-using RecipeTraderDotNet.Data.Tests.Utilities;
+using RecipeTraderDotNet.TestObjectGenerator;
 using Should;
 using Xunit;
 
@@ -18,9 +18,9 @@ namespace RecipeTraderDotNet.Data.Tests.RepositoryTests.MemoryRepositoryTests
         private List<PrivateRecipe> GetCurrentPrivateRecipeSystemState()
         {
             var state = new List<PrivateRecipe>();
-            state.Add(TestHelper.GenerateRandomPrivateRecipe(3));
-            state.Add(TestHelper.GenerateRandomPrivateRecipe(4));
-            state.Add(TestHelper.GenerateRandomPrivateRecipe(2));
+            state.Add(TestObjectsGenerator.GenerateRandomPrivateRecipe(3));
+            state.Add(TestObjectsGenerator.GenerateRandomPrivateRecipe(4));
+            state.Add(TestObjectsGenerator.GenerateRandomPrivateRecipe(2));
             return state;
         }
 
@@ -62,7 +62,7 @@ namespace RecipeTraderDotNet.Data.Tests.RepositoryTests.MemoryRepositoryTests
             var state = GetCurrentPrivateRecipeSystemState();
             var originalCount = state.Count;
             var sut = new PrivateRecipeRepository(state);
-            var newPrivateRecipe = TestHelper.GenerateRandomPrivateRecipe(2);
+            var newPrivateRecipe = TestObjectsGenerator.GenerateRandomPrivateRecipe(2);
             sut.Insert(newPrivateRecipe);
 
             var results = sut.GetAll();
@@ -79,7 +79,7 @@ namespace RecipeTraderDotNet.Data.Tests.RepositoryTests.MemoryRepositoryTests
             var sut = new PrivateRecipeRepository(state);
             var existingOne = state[0];
             var newTitle = "My new title";
-            var newItem = TestHelper.GenerateRandomRecipeItem(existingOne);
+            var newItem = TestObjectsGenerator.GenerateRandomRecipeItem(existingOne, true);
             
             existingOne.Title = newTitle;
             existingOne.Add(newItem);
