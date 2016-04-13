@@ -29,6 +29,8 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 
         public void Insert(MoneyAccount t)
         {
+            var random = new Random();
+            t.Id = random.Next(1, Int32.MaxValue);
             _currentMoneyAccountState.Add(t);
         }
 

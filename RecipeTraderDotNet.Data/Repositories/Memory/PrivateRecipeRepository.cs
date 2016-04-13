@@ -29,6 +29,8 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 
         public void Insert(PrivateRecipe t)
         {
+            var random = new Random();
+            t.Id = random.Next(1, Int32.MaxValue);
             _currentPrivateRecipeState.Add(t);
         }
 
@@ -51,7 +53,7 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
 
         public List<PrivateRecipe> GetUserRecipes(string userId)
         {
-            return _currentPrivateRecipeState.Where(r => r.Author == userId).ToList();
+            return _currentPrivateRecipeState.Where(r => r.OwnerUserId == userId).ToList();
         }
     }
 }

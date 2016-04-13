@@ -43,5 +43,26 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             return true;
         }
 
+        public override string ToString()
+        {
+            var output = $"{Title} by [{Author}]\nPice: {Price}  Created on: {TimeCreated.ToLocalTime()}  Last Modified on: {TimeLastModified.ToLocalTime()}\n";
+
+            var itemsOutput = string.Empty;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                itemsOutput += $"{i + 1}. {Items[i].ToString()}\n";
+            }
+            output += itemsOutput;
+
+            output += $"Overall Rating: {OverallRating}\n";
+            var reviewsOutput = string.Empty;
+            for (int i = 0; i < Reviews.Count; i++)
+            {
+                reviewsOutput += $"Review {i+1} : {Reviews[i]}\n";
+            }
+
+            output += reviewsOutput;
+            return output;
+        }
     }
 }

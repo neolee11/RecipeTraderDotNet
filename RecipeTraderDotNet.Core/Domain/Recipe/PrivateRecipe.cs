@@ -9,6 +9,7 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
     [Serializable]
     public class PrivateRecipe : RecipeBase, IPrivateRecipe
     {
+        public string OwnerUserId { get; set; }
         public RecipePurchaseInformation PurchaseInformation { get; set; } = null;
         public bool IsPurchased => PurchaseInformation != null;
         public string RecipeStatus
@@ -40,9 +41,10 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         {
         }
 
-        public PrivateRecipe(string authorName, string title)
+        public PrivateRecipe(string authorId, string title)
         {
-            this.Author = authorName;
+            this.OwnerUserId = authorId;
+            this.Author = authorId;
             this.Title = title;
         }
 
@@ -52,8 +54,6 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             privateRecipe.Items = publicRecipe.Items.ConvertAll(item => item.DeepCopy(false, privateRecipe));
             privateRecipe.TimeCreated = publicRecipe.TimeCreated;
             privateRecipe.TimeLastModified = publicRecipe.TimeLastModified;
-
-          
 
             return privateRecipe;
         }
@@ -81,7 +81,26 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             this.Items.Clear();
             this.TimeLastModified = DateTime.UtcNow;
         }
-    }
 
+        public override string ToString()
+        {
+            var output = $"Private Recipe ID: {Id}\n{Title} by [{Author}]\n Created on: {TimeCreated.ToLocalTime()}  Last Modified on: {TimeLastModified.ToLocalTime()}\n";
+            output += $"Recipe status : {RecipeStatus}\n";
+
+            var itemsOutput = string.Empty;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                itemsOutput += $"{i + 1}. {Items[i].ToString()}\n";
+            }
+            output += itemsOutput;
+
+            if (IsPurchased)
+            {
+                output += $"{PurchaseInformation}";
+            }
+           
+            return output;
+        }
+    }
 
 }

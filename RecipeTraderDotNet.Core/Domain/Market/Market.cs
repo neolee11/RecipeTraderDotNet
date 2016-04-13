@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 using RecipeTraderDotNet.Core.Domain.Repositories;
+using RecipeTraderDotNet.Core.Domain.User;
 
 namespace RecipeTraderDotNet.Core.Domain.Market
 {
@@ -46,6 +47,7 @@ namespace RecipeTraderDotNet.Core.Domain.Market
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
             var privateRecipe = PrivateRecipe.ConvertFromPublicRecipe(pubR);
+            privateRecipe.OwnerUserId = requestUserId;
             privateRecipe.PurchaseInformation = new RecipePurchaseInformation
             {
                 PrivateRecipe = privateRecipe,
@@ -124,6 +126,25 @@ namespace RecipeTraderDotNet.Core.Domain.Market
             info.TotalUsers = allAccounts.Count;
             info.TotalCurrency = allAccounts.Sum(a => a.Balance);
             return info;
+        }
+
+        public string CreateUserMoneyAccount(string userId, decimal initBalance = 100)
+        {
+            if (_moneyAccountRepo.GetUserMoneyAccount(userId) != null)
+            {
+                return $"User ID {userId} already exists. Choose another User ID";
+            }
+
+            initBalance = initBalance < 0 ? 100 : initBalance;
+            var moneyAccount = new MoneyAccount
+            {
+                UserId = userId,
+                Balance = initBalance
+            };
+
+            _moneyAccountRepo.Insert(moneyAccount);
+
+            return string.Empty;
         }
     }
 }

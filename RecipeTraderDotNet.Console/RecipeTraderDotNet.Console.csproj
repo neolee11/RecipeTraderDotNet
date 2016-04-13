@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{10F03353-8A59-4872-907C-95CE5FD17B9A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{A3A58245-DAF6-4BF2-B26E-011569484BB8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RecipeTraderDotNet.Core</RootNamespace>
-    <AssemblyName>RecipeTraderDotNet.Core</AssemblyName>
+    <RootNamespace>RecipeTraderDotNet.Console</RootNamespace>
+    <AssemblyName>RecipeTraderDotNet.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ploeh.AutoFixture, Version=3.43.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoFixture.3.43.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,33 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\DomainObjectsGenerator.cs" />
-    <Compile Include="Common\PrintHelper.cs" />
-    <Compile Include="Domain\Market\IMarket.cs" />
-    <Compile Include="Domain\Market\Market.cs" />
-    <Compile Include="Domain\Market\SystemInfo.cs" />
-    <Compile Include="Domain\Recipe\UserReview.cs" />
-    <Compile Include="Domain\Recipe\RecipePurchaseInformation.cs" />
-    <Compile Include="Domain\Repositories\IMoneyAccountRepository.cs" />
-    <Compile Include="Domain\Repositories\IPrivateRecipeRepository.cs" />
-    <Compile Include="Domain\Repositories\IPublicRecipeRepository.cs" />
-    <Compile Include="Domain\Repositories\IRepository.cs" />
-    <Compile Include="Domain\Recipe\IPublicRecipe.cs" />
-    <Compile Include="Domain\Recipe\IPrivateRecipe.cs" />
-    <Compile Include="Domain\Recipe\PrivateRecipe.cs" />
-    <Compile Include="Domain\Recipe\PublicRecipe.cs" />
-    <Compile Include="Domain\Recipe\RecipeBase.cs" />
-    <Compile Include="Domain\Recipe\RecipeItem.cs" />
-    <Compile Include="Domain\Recipe\RecipeItemStatus.cs" />
-    <Compile Include="Domain\User\MoneyAccount.cs" />
-    <Compile Include="Domain\User\UserService.cs" />
-    <Compile Include="Infrastructure\BaseEntity.cs" />
-    <Compile Include="Infrastructure\ObjectExtensions.cs" />
+    <Compile Include="CommandLineHelper.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="DomainObjectType.cs" />
+    <Compile Include="CommandType.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemRunner.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RecipeTraderDotNet.Core\RecipeTraderDotNet.Core.csproj">
+      <Project>{10f03353-8a59-4872-907c-95ce5fd17b9a}</Project>
+      <Name>RecipeTraderDotNet.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RecipeTraderDotNet.Data\RecipeTraderDotNet.Data.csproj">
+      <Project>{baf90845-ed30-466c-940a-4a86f3b90604}</Project>
+      <Name>RecipeTraderDotNet.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,21 +17,82 @@ Type of objects:
 *: Repos
 
 User Commands:
-* create new user - application level, auto giving $100 moneyaccount
-* log in as user
+* add new user - application level, auto giving $100 moneyaccount : add user <username>
+* log in as user or switch user : login user <username>
 
-* list all my recipes
-* list one recipe (by id or fuzzy name)
-* create recipe
-* edit recipe (by id or fuzzy name)
-* remove recipe (by id)
+* show all my recipes : show recipe
+* show one recipe (by id or fuzzy name) : show recipe <id or fuzzy name>
+* show one recipe with only certain status : show recipe <id or fuzzy name> -status <value>
+* add recipe : add recipe <title>
+* edit recipe (by id or fuzzy name) : edit recipe <id or fuzzy name> -title <new title>
+* remove recipe (by id) : remove recipe <id>
 
-* Sell recipe 
-* take down recipe
+* add recipe item to recipe : add item <item description> -recipe <recipe id> 
+* edit recipe item (by id) : edit item <id> -recipe <recipe id> -description/desc <new description>
+* edit recipe status : edit item <id> -recipe <recipe id> -status <finish or reset>
+* edit remove recipe item: remove item <id> -recipe <recipe id>
 
-* list all market recipes
-* purchase recipe
-* review recipe
+* Publish recipe : publish recipe <private recipe id> -price <value>
+* take down recipe : takedown recipe <public recipe id>
 
-* list my balance 
-* view system balance
+* show all market recipes : show market/publicrecipe
+* purchase recipe : purchase publicRecipe <public recipe id>
+* review recipe : review publicRecipe <public recipe id> -rating <value> -comment <value>
+
+* show my balance : show balance
+* show system status : show systemstatus
+
+=======================
+
+* add user <username>
+* login user <username>
+
+* show recipe
+* show recipe <id or fuzzy name>
+* show recipe <id or fuzzy name> -status <value>
+* add recipe <title>
+* edit recipe <id or fuzzy name> -title <new title>
+* remove recipe <id>
+
+* add item <item description> -recipe <recipe id> 
+* edit item <id> -recipe <recipe id> -description/desc <new description>
+* edit item <id> -recipe <recipe id> -status <finish or reset>
+* remove item <id> -recipe <recipe id>
+
+* publish recipe <private recipe id> -price <value>
+* takedown recipe <public recipe id>
+
+* show market/publicRecipe
+* purchase publicRecipe <public recipe id>
+* review publicRecipe <public recipe id> -rating <value> -comment <value>
+
+* show balance
+* show systemstatus
+
+=======================
+
+* login user <username> (done)
+
+* show systemstatus (done)
+* show market/publicRecipe (done)
+* show recipe (done)
+* show recipe <id or fuzzy name> (done)
+* show recipe <id or fuzzy name> -status <value> (done)
+* show balance (done)
+
+
+* add user <username> (done)
+* add recipe <title>
+* add item <item description> -recipe <recipe id> (done) 
+
+* edit recipe <id or fuzzy name> -title <new title> (done)
+* edit item <id> -recipe <recipe id> -description/desc <new description> -status <finish or reset> (done)
+
+* remove recipe <id>
+* remove item <id> -recipe <recipe id>
+
+* publish recipe <private recipe id> -price <value>
+* takedown recipe <public recipe id>
+* purchase publicRecipe <public recipe id>
+* review publicRecipe <public recipe id> -rating <value> -comment <value>
+

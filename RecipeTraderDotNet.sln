@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8AC7EEAC-1854-4CF7-83F5-DF21F30F84D8}"
 EndProject
@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{22BBE6
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTraderDotNet.Console", "RecipeTraderDotNet.Console\RecipeTraderDotNet.Console.csproj", "{A3A58245-DAF6-4BF2-B26E-011569484BB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{D2993A00-5A06-424F-AB28-0AB81061A245}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2993A00-5A06-424F-AB28-0AB81061A245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2993A00-5A06-424F-AB28-0AB81061A245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A58245-DAF6-4BF2-B26E-011569484BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A58245-DAF6-4BF2-B26E-011569484BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A58245-DAF6-4BF2-B26E-011569484BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A58245-DAF6-4BF2-B26E-011569484BB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

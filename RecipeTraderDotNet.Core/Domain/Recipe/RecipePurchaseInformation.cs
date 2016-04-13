@@ -10,5 +10,9 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         public PublicRecipe OriginalMarketRecipe { get; set; }
         public DateTime TimePurchased { get; set; }
 
+        public override string ToString()
+        {
+            return $"Recipe purchased on {TimePurchased.ToLocalTime()}";
+        }
     }
 }

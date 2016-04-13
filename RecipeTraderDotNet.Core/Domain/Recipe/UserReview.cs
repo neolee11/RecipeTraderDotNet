@@ -22,5 +22,10 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
         }
 
         public string Comment { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Comment} - by {ReviewerUserId} Rating:{Rating}  ";
+        }
     }
 }

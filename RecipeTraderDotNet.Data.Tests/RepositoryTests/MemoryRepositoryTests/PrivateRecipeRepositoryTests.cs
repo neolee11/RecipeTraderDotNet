@@ -110,8 +110,8 @@ namespace RecipeTraderDotNet.Data.Tests.RepositoryTests.MemoryRepositoryTests
         public void GetUserRecipesShouldWork()
         {
             var state = GetCurrentPrivateRecipeSystemState();
-            state[0].Author = "user1";
-            state[1].Author = "user1";
+            state[0].OwnerUserId = "user1";
+            state[1].OwnerUserId = "user1";
             var sut = new PrivateRecipeRepository(state);
 
             var results = sut.GetUserRecipes("user1");

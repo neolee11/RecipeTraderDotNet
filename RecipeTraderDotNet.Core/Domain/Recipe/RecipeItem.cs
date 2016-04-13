@@ -88,6 +88,9 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             this.TimeLastStatusChange = DateTime.UtcNow;
         }
 
-      
+        public override string ToString()
+        {
+            return $"{Description} [{Id}]\tStatus: {Status}  Created on: {TimeCreated.ToLocalTime()} Last Status Change: {TimeLastStatusChange.ToLocalTime()}";
+        }
     }
 }
