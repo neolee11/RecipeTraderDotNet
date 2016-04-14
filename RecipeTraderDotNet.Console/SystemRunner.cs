@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RecipeTraderDotNet.Core.Application;
 using RecipeTraderDotNet.Core.Common;
 using RecipeTraderDotNet.Core.Domain.Market;
@@ -29,11 +27,7 @@ namespace RecipeTraderDotNet.Console
         private UserService _userService;
 
         private readonly Random _random = new Random();
-       
-        public SystemRunner()
-        {
-        }
-
+      
         /// <summary>
         /// Intial System consists of:
         /// Three user: daniel with $120, jennie with $100, tom with $80
@@ -42,15 +36,23 @@ namespace RecipeTraderDotNet.Console
         /// </summary>
         public void InitializeSystem()
         {
-            var userDaniel = DomainObjectsGenerator.GenerateRandoMoneyAccount("daniel", 100);
+            var userDaniel = DomainObjectsGenerator.GenerateRandoMoneyAccount("daniel");
             var userJennie = DomainObjectsGenerator.GenerateRandoMoneyAccount("jennie");
             var userTom = DomainObjectsGenerator.GenerateRandoMoneyAccount("tom");
-           
+
             var recipeDaniel1 = DomainObjectsGenerator.GenerateRandomPrivateRecipe(4, userDaniel.UserId);
             var recipeDaniel2 = DomainObjectsGenerator.GenerateRandomPrivateRecipe(2, userDaniel.UserId);
             var recipeJennie1 = DomainObjectsGenerator.GenerateRandomPrivateRecipe(5, userJennie.UserId);
 
             var recipeOnMarket = PublicRecipe.ConvertFromPrivateRecipe(recipeDaniel1);
+            recipeOnMarket.Id = GetRandomInt();
+            if (recipeOnMarket.Items != null)
+            {
+                foreach (var recipeItem in recipeOnMarket.Items)
+                {
+                    recipeItem.Id = GetRandomInt();
+                }
+            }
             recipeOnMarket.Price = 20;
             recipeOnMarket.TimePublished = new DateTime(2016, 3, 20, 11, 0, 0);
 
@@ -59,16 +61,7 @@ namespace RecipeTraderDotNet.Console
             tomsReview.Comment = "Good recipe";
             tomsReview.Rating = 4;
             recipeOnMarket.AddReview(tomsReview);
-
-            //var recipeTom = PrivateRecipe.ConvertFromPublicRecipe(recipeOnMarket);
-            //recipeTom.OwnerUserId = 
-            //recipeTom.PurchaseInformation = new RecipePurchaseInformation
-            //{
-            //    PrivateRecipe = recipeTom,
-            //    OriginalMarketRecipe = recipeOnMarket,
-            //    TimePurchased = new DateTime(2016, 4, 1, 9, 0, 0)
-            //};
-
+          
             _moneyAccounts = new List<MoneyAccount>
             {
                 userDaniel,
@@ -98,12 +91,17 @@ namespace RecipeTraderDotNet.Console
             };
             _privateRecipeRepository = new PrivateRecipeRepository(_userRecipes);
         }
-            
+
+        private int GetRandomInt()
+        {
+            return _random.Next(1, Int32.MaxValue);
+        }
+
         /// <summary>
         /// Command Pattern:
         /// commandType objectType [object id or name or value] -field [field value]
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="rawCommand"></param>
         /// <returns>Output</returns>
         public string ProcessCommand(string rawCommand)
         {
@@ -129,23 +127,295 @@ namespace RecipeTraderDotNet.Console
                 case CommandType.Edit:
                     output = ProcessEditCommand(command);
                     break;
-                //case CommandType.Remove:
-                //    break;
-                //case CommandType.Publish:
-                //    break;
-                //case CommandType.Takedown:
-                //    break;
-                //case CommandType.Purchase:
-                //    break;
-                //case CommandType.Review:
-                //    break;
+                case CommandType.Remove:
+                    output = ProcessRemoveCommand(command);
+                    break;
+                case CommandType.Publish:
+                    output = ProcessPublishCommand(command);
+                    break;
+                case CommandType.Takedown:
+                    output = ProcessTakeDownCommand(command);
+                    break;
+                case CommandType.Purchase:
+                    output = ProcessPurchaseCommand(command);
+                    break;
+                case CommandType.Review:
+                    output = ProcessReviewCommand(command);
+                    break;
                 default:
                     output = command.ToString();
                     break;
             }
 
             return output;
+        }
 
+        private string ProcessReviewCommand(Command command)
+        {
+            var output = "Invalid Review Command";
+
+            if (!IsUserLogin()) return ErrMsgLoginRequired;
+
+            if (command.MainObjPair.Key == DomainObjectType.PublicRecipe)
+            {
+                if (command.MainObjPair.Value == string.Empty)
+                {
+                    return "Review recipe must specify public recipe ID";
+                }
+
+                if (command.OptionalCommandPairs == null || command.OptionalCommandPairs.Count < 2)
+                {
+                    return "Review recipe must specify a rating and optionally with a comment";
+                }
+
+                var recipeIdPattern = command.MainObjPair.Value;
+                int recipeId;
+                if (int.TryParse(recipeIdPattern, out recipeId) == false)
+                {
+                    return "Review recipe must specify a valid recipe ID";
+                }
+
+                string ratingPattern = string.Empty;
+                double rating;
+                string comment = string.Empty;
+                foreach (var optionalCommandPair in command.OptionalCommandPairs)
+                {
+                    var currValue = optionalCommandPair.Key.ToLower();
+                    if (currValue.Contains("rating")) ratingPattern = optionalCommandPair.Value;
+                    else if (currValue.Contains("comment")) comment = optionalCommandPair.Value;
+                }
+
+                if (double.TryParse(ratingPattern, out rating) == false)
+                {
+                    return "Review recipe must specify a valid rating";
+                }
+
+                var result = _userService.ReviewRecipe(recipeId, rating, comment);
+
+                return string.IsNullOrEmpty(result) ? "Review recipe successfully" : result;
+            }
+
+            return output;
+        }
+
+        private string ProcessPurchaseCommand(Command command)
+        {
+            var output = "Invalid Purchase Command";
+
+            if (!IsUserLogin()) return ErrMsgLoginRequired;
+
+            if (command.MainObjPair.Key == DomainObjectType.PublicRecipe)
+            {
+                if (command.MainObjPair.Value == string.Empty)
+                {
+                    return "Purchase recipe must specify recipe ID";
+                }
+
+                var recipeIdPattern = command.MainObjPair.Value;
+                int recipeId;
+                if (int.TryParse(recipeIdPattern, out recipeId) == false)
+                {
+                    return "Purchase recipe must specify a valid recipe ID";
+                }
+
+                var result = _userService.PurchaseRecipe(recipeId);
+
+                return string.IsNullOrEmpty(result) ? "Purchase recipe successfully" : result;
+            }
+
+            return output;
+        }
+
+        private string ProcessTakeDownCommand(Command command)
+        {
+            var output = "Invalid Takedown Command";
+
+            if (!IsUserLogin()) return ErrMsgLoginRequired;
+
+            if (command.MainObjPair.Key == DomainObjectType.PublicRecipe)
+            {
+                if (command.MainObjPair.Value == string.Empty)
+                {
+                    return "Takedown recipe must specify recipe ID";
+                }
+
+                var recipeIdPattern = command.MainObjPair.Value;
+                int recipeId;
+                if (int.TryParse(recipeIdPattern, out recipeId) == false)
+                {
+                    return "Takedown recipe must specify a valid recipe ID";
+                }
+
+                var result = _userService.TakeDownRecipe(recipeId);
+
+                return string.IsNullOrEmpty(result) ? "Takedown recipe successfully" : result;
+            }
+
+            return output;
+        }
+
+        private string ProcessPublishCommand(Command command)
+        {
+            var output = "Invalid Publish Command";
+
+            if (!IsUserLogin()) return ErrMsgLoginRequired;
+
+            if (command.MainObjPair.Key == DomainObjectType.PrivateRecipe)
+            {
+                if (command.MainObjPair.Value == string.Empty)
+                {
+                    return "Publish recipe must specify recipe ID";
+                }
+
+                if (command.OptionalCommandPairs == null || !command.OptionalCommandPairs.Any())
+                {
+                    return "Publish recipe must specify price";
+                }
+
+                var recipeIdPattern = command.MainObjPair.Value;
+                int recipeId;
+                if (int.TryParse(recipeIdPattern, out recipeId) == false)
+                {
+                    return "Publish recipe must specify a valid recipe ID";
+                }
+
+                string pricePattern = string.Empty;
+                decimal price;
+
+                foreach (var optionalCommandPair in command.OptionalCommandPairs)
+                {
+                    var currValue = optionalCommandPair.Key.ToLower();
+                    if (currValue.Contains("price")) pricePattern = optionalCommandPair.Value;
+                }
+
+                if (decimal.TryParse(pricePattern, out price) == false)
+                {
+                    return "Publish recipe must specify a valid price";
+                }
+
+                var recipe = _privateRecipeRepository.GetById(recipeId);
+                if (recipe == null)
+                {
+                    return $"Recipe with ID {recipeId} not found";
+                }
+
+                var result = _userService.PublishRecipe(recipe.Id, price);
+             
+                return string.IsNullOrEmpty(result) ? "Publish recipe successfully" : result;
+            }
+
+            return output;
+        }
+
+        private string ProcessRemoveCommand(Command command)
+        {
+            var output = "Invalid remove command";
+
+            if (!IsUserLogin()) return ErrMsgLoginRequired;
+
+            if (command.MainObjPair.Key == DomainObjectType.PrivateRecipe)
+            {
+                return RemovePrivateRecipe(command);
+            }
+
+            if (command.MainObjPair.Key == DomainObjectType.RecipeItem)
+            {
+                return RemovePrivateRecipeItem(command);
+            }
+
+            return output;
+        }
+
+        private string RemovePrivateRecipeItem(Command command)
+        {
+            if (command.MainObjPair.Value == string.Empty)
+            {
+                return "Remove item must specify item ID";
+            }
+
+            if (command.OptionalCommandPairs == null || !command.OptionalCommandPairs.Any())
+            {
+                return "Remove item must specify recipe ID";
+            }
+
+            var itemIdPattern = command.MainObjPair.Value;
+            int itemId;
+            if (int.TryParse(itemIdPattern, out itemId) == false)
+            {
+                return "Remove item must specify a valid item ID";
+            }
+
+            string recipeIdPattern = string.Empty;
+            int recipeId;
+
+            foreach (var optionalCommandPair in command.OptionalCommandPairs)
+            {
+                var currValue = optionalCommandPair.Key.ToLower();
+                if (currValue.Contains("recipe")) recipeIdPattern = optionalCommandPair.Value;
+            }
+
+            if (int.TryParse(recipeIdPattern, out recipeId) == false)
+            {
+                return "Remove item must specify a valid recipe ID";
+            }
+
+            var recipe = _privateRecipeRepository.GetById(recipeId);
+            if (recipe == null)
+            {
+                return $"Recipe with ID {recipeId} not found";
+            }
+
+            var item = recipe.Items.SingleOrDefault(i => i.Id == itemId);
+            if (item == null)
+            {
+                return $"Recipe item ID {itemId} not found in the recipe";
+            }
+
+            recipe.Remove(item);
+            _privateRecipeRepository.Update(recipe);
+            return "Remove item successfully";
+        }
+
+        private string RemovePrivateRecipe(Command command)
+        {
+            var recipePattern = command.MainObjPair.Value;
+            if (string.IsNullOrEmpty(recipePattern))
+            {
+                return "Edit recipe must specify recipe ID or pattern";
+            }
+
+            int recipeId;
+            PrivateRecipe recipe = null;
+            if (int.TryParse(recipePattern, out recipeId))
+            {
+                //search by id
+                recipe = _userService.GetUserRecipes().SingleOrDefault(r => r.Id == recipeId);
+            }
+            else
+            {
+                //search by title
+                var foundRecipes = _userService.GetUserRecipes().Where(r => r.Title.ToLower().Contains(recipePattern.ToLower())).ToList();
+                if (foundRecipes.Count > 1)
+                {
+                    return $"{foundRecipes.Count} recipes with title {recipePattern} found. Cannot Edit. Title must be unique\n";
+                }
+
+                if (foundRecipes.Count == 1)
+                {
+                    recipe = foundRecipes[0];
+                }
+            }
+
+            if (recipe == null)
+            {
+                return "Recipe not found";
+            }
+
+
+            _privateRecipeRepository.Delete(recipe.Id);
+
+            var output = $"Delete recipe {recipe.Id} : {recipe.Title} successful";
+            return output;
         }
 
         private string ProcessEditCommand(Command command)
@@ -230,12 +500,13 @@ namespace RecipeTraderDotNet.Console
                 item.Finish();
             }
 
+            _privateRecipeRepository.Update(recipe);
             return "Edit item successfully";
         }
 
         private string EditPrivateRecipe(Command command)
         {
-            var output = "Invalid edit command";
+            var output = "";
 
             var recipePattern = command.MainObjPair.Value;
             if (string.IsNullOrEmpty(recipePattern))
@@ -280,6 +551,7 @@ namespace RecipeTraderDotNet.Console
 
             recipe.Title = newTitle;
 
+            _privateRecipeRepository.Update(recipe);
             output += $"Edit recipe {recipe.Id} : {recipe.Title} successful";
             return output;
         }
@@ -348,15 +620,12 @@ namespace RecipeTraderDotNet.Console
             if (recipe == null) return $"Recipe with ID [{recipeId}] not found";
 
             var item = new RecipeItem(itemDesc, recipe);
-            item.Id = GetRandomInt();
-            recipe.Add(item); //this should persist item in memory
+            recipe.Add(item);
+            _privateRecipeRepository.Update(recipe);
             return "Item created successfully";
         }
 
-        private int GetRandomInt()
-        {
-            return _random.Next(1, Int32.MaxValue);
-        }
+ 
 
         private string ProcessLoginCommand(Command command)
         {
@@ -484,8 +753,8 @@ namespace RecipeTraderDotNet.Console
             var command = new Command();
             var parts = CommandLineHelper.SplitCommandLine(rawCommand).ToList();
 
-            if(!parts.Any()) return command;
-            
+            if (!parts.Any()) return command;
+
             var rawCommandType = parts[0].ToLower();
 
             if (rawCommandType == "help") command.CommandType = CommandType.Help;
@@ -533,7 +802,7 @@ namespace RecipeTraderDotNet.Console
                 //if(command.OptionalCommandPairs == null) command.OptionalCommandPairs = new List<KeyValuePair<string, string>>();
                 command.OptionalCommandPairs.Add(new KeyValuePair<string, string>(key, value));
             }
-            
+
             return command;
         }
 

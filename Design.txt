@@ -86,13 +86,13 @@ User Commands:
 * add item <item description> -recipe <recipe id> (done) 
 
 * edit recipe <id or fuzzy name> -title <new title> (done)
-* edit item <id> -recipe <recipe id> -description/desc <new description> -status <finish or reset> (done)
+* edit item <id> -recipe <recipe id> -description/desc <new description> -status <done or new> (done)
 
-* remove recipe <id>
-* remove item <id> -recipe <recipe id>
+* remove recipe <id or unique fuzzy title> (done)
+* remove item <id> -recipe <recipe id> (done)
 
-* publish recipe <private recipe id> -price <value>
-* takedown recipe <public recipe id>
-* purchase publicRecipe <public recipe id>
-* review publicRecipe <public recipe id> -rating <value> -comment <value>
+* publish recipe <private recipe id> -price <value> (done)
+* takedown publicrecipe/market <public recipe id> (done)
+* purchase publicRecipe/market <public recipe id> (done)
+* review publicRecipe/market <public recipe id> -rating <value> -comment <value> (done)
 

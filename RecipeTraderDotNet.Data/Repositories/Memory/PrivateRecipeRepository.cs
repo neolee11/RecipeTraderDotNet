@@ -30,7 +30,19 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
         public void Insert(PrivateRecipe t)
         {
             var random = new Random();
-            t.Id = random.Next(1, Int32.MaxValue);
+
+            if (t.Id == default(int)) t.Id = random.Next(1, int.MaxValue);
+
+            if (t.Items != null && t.Items.Count > 0)
+            {
+                foreach (var recipeItem in t.Items)
+                {
+                    if (recipeItem.Id == default(int))
+                    {
+                        recipeItem.Id = random.Next(1, int.MaxValue);
+                    }
+                }
+            }
             _currentPrivateRecipeState.Add(t);
         }
 
@@ -41,12 +53,14 @@ namespace RecipeTraderDotNet.Data.Repositories.Memory
             if (existing != null)
             {
                 _currentPrivateRecipeState.Remove(existing);
-                _currentPrivateRecipeState.Add(t);
+                //_currentPrivateRecipeState.Add(t);
+                Insert(t);
             }
         }
 
         public void Delete(int id)
         {
+            //Should also delete its items
             var existing = _currentPrivateRecipeState.SingleOrDefault(a => a.Id == id);
             if (existing != null) _currentPrivateRecipeState.Remove(existing);
         }

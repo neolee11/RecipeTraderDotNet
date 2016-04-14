@@ -11,7 +11,7 @@ namespace RecipeTraderDotNet.Core.Common
     {
         public static string Print(this List<PublicRecipe> publicRecipes)
         {
-            if (publicRecipes == null || !publicRecipes.Any()) return String.Empty;
+            if (publicRecipes == null || !publicRecipes.Any()) return "There are no public recipes on the market";
 
             var output = $"Number of Public Recipes : {publicRecipes.Count}\n\n";
 

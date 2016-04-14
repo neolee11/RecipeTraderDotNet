@@ -53,9 +53,9 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.UserTests
         [Fact]
         public void ReviewRecipeShouldSendUserReviewToTheMarketRecipe()
         {
-            _sut.ReviewRecipe(234, 3, "average");
+            _sut.ReviewRecipe(234, 3.0, "average");
             _mockMarket.Verify(x => x.Review(It.Is<int>(y => y == 234), It.Is<string>(z => z == _userId), 
-                It.Is<int>(b => b == 3), It.Is<string>(a => a == "average")), Times.Once);
+                It.Is<double>(b => Math.Abs(b - 3.0) < 0.01), It.Is<string>(a => a == "average")), Times.Once);
         }
 
         [Fact]

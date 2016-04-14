@@ -46,7 +46,7 @@ namespace RecipeTraderDotNet.Core.Domain.User
             return _market.Publish(recipe, price);
         }
 
-        public string ReviewRecipe(int publicRecipeId, int rating, string comment)
+        public string ReviewRecipe(int publicRecipeId, double rating, string comment)
         {
             return _market.Review(publicRecipeId, UserId, rating, comment);
         }

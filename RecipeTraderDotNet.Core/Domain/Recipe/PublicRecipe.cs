@@ -45,7 +45,7 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
 
         public override string ToString()
         {
-            var output = $"{Title} by [{Author}]\nPice: {Price}  Created on: {TimeCreated.ToLocalTime()}  Last Modified on: {TimeLastModified.ToLocalTime()}\n";
+            var output = $"{Title} by [{Author}]\nID: {Id}\nPice: {Price}  Created on: {TimeCreated.ToLocalTime()}  Last Modified on: {TimeLastModified.ToLocalTime()}\n";
 
             var itemsOutput = string.Empty;
             for (int i = 0; i < Items.Count; i++)
@@ -56,9 +56,12 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
 
             output += $"Overall Rating: {OverallRating}\n";
             var reviewsOutput = string.Empty;
-            for (int i = 0; i < Reviews.Count; i++)
+            if (Reviews != null)
             {
-                reviewsOutput += $"Review {i+1} : {Reviews[i]}\n";
+                for (int i = 0; i < Reviews.Count; i++)
+                {
+                    reviewsOutput += $"Review {i + 1} : {Reviews[i]}\n";
+                }
             }
 
             output += reviewsOutput;

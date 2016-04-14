@@ -86,10 +86,23 @@ namespace RecipeTraderDotNet.Core.Domain.Market
         /// <param name="comment"></param>
         /// <param name="requestUserId"></param>
         /// <returns>Any error message. Empty message indicates success</returns>
-        public string Review(int publicRecipeId, string reviewerUserId, int rating, string comment)
+        public string Review(int publicRecipeId, string reviewerUserId, double rating, string comment)
         {
             var pubR = _publicRecipeRepo.GetById(publicRecipeId);
+            if (pubR == null) return "Recipe does not exist";
+
             if (pubR.Author == reviewerUserId) return "Recipe author cannot review his/her own recipe";
+
+            if (pubR.Reviews != null && pubR.Reviews.Count > 0)
+            {
+                foreach (var userReview in pubR.Reviews)
+                {
+                    if (userReview.ReviewerUserId == reviewerUserId)
+                    {
+                        return $"User {reviewerUserId} already reviewed this recipe";
+                    }
+                }    
+            }
 
             var review = new UserReview
             {
