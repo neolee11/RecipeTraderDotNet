@@ -68,3 +68,23 @@ namespace RecipeTraderDotNet.Core.Infrastructure
         }
     }
 }
+
+//http://www.loganfranken.com/blog/692/overriding-equals-in-c-part-2/
+//A good implementation of GetHashCode
+//Implement Equal, GetHashCode, ==, != together for convinience
+
+//public override int GetHashCode()
+//{
+//    unchecked
+//    {
+//        // Choose large primes to avoid hashing collisions
+//        const int HashingBase = (int)2166136261;
+//        const int HashingMultiplier = 16777619;
+
+//        int hash = HashingBase;
+//        hash = (hash * HashingMultiplier) ^ (!Object.ReferenceEquals(null, AreaCode) ? AreaCode.GetHashCode() : 0);
+//        hash = (hash * HashingMultiplier) ^ (!Object.ReferenceEquals(null, Exchange) ? Exchange.GetHashCode() : 0);
+//        hash = (hash * HashingMultiplier) ^ (!Object.ReferenceEquals(null, SubscriberNumber) ? SubscriberNumber.GetHashCode() : 0);
+//        return hash;
+//    }
+//}

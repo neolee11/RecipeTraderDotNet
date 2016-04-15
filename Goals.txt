@@ -1,31 +1,29 @@
-To Dos:
-* continue understand the architecture of nopCommerce
-
-Software Requirement 
-* A Recipe trading system - Create your own recipe (a How-To-Do list or Work list), then you can trade it publicly with an optional fee
-* A recipe consists of items, either steps (ordered) or tasks (unordered). Item should have timestamps, status (Ready, In Progress, Done). Can select display only certain types of items (by status, timestamp). Can record history of recipe completion.
-* Reciple itself determines the item types it contains
-* A user needs to login 
-* Front page shows previews of publicly traded recipes
-* Need to deposit, credit/debit money
-* Need to have notification system and email system in replace.
-* Use UTC time 
-
-Test from new location
-
 Practice Goals
-* TDD
-	- xUnit.Net: install xUnit packages from Nuget, and install xUnit runner for VS or for ReSharper via extensions
-* IoC and Mocking
-* Plugin architecture
+* IoC, used in app code and tests
+* CI and CD using TeamCity (it can deploy to Azure) or discover the Auzre (cloud) way
+* understand the architecture of nopCommerce, and general enterprise level project structures
+* DDD, Aggreate roots, Entity type and Value type
+* Entity framework (object graphs, disconnected mode and modifications)
+* Plugin architecture and extensible architecture
 * C# features
-* C# collections (major ones and their namespaces) and generics
-* Design patterns 
-* Command line app
-* Entity framework
-* Web API
-* MVC
+* C# collections (major ones and their namespaces), generics, and Linq
+* Design patterns (observer pattern, publish/subscriber, factory, )
+* Microsservices
 
+* TDD with xUnit, Moq, Autofixture (done)
+
+====================================================================
+
+Tools used:
+* xUnit
+* Should / Should.Fluent
+* Moq
+* AutoFixture - generate random test data
+* AutoFixture.AutoMoq, AutoFixture.Xunit, SemanticComparison (for likeness) - optional libraries help with tests
+* AutoFac : IoC (use this in actual projects that don't have a IoC container built in, but not in test project)
+* AutoMapper - object to object mapper (use for domain object mapping to DTO object in web project or objects to expose in web apis)
+
+====================================================================
 
 Problems:
 * My OOP design techniques.
@@ -44,8 +42,8 @@ Problems:
 		Getting Started with Entity Framework 6
 	Clean Code Book
 	Head-first design book
-* 
 
+====================================================================
 
 Lessons Learned:
 * fn + enter is like insert on windows

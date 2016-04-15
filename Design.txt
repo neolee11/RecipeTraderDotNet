@@ -1,11 +1,13 @@
-Tools used:
-* xUnit
-* Should / Should.Fluent
-* Moq
-* AutoFixture - generate random test data
-* AutoFac : IoC (use this in actual projects that don't have a IoC container built in, but not in test project)
-* AutoMapper - object to object mapper (use for domain object mapping to DTO object in web project or objects to expose in web apis)
+Software Requirement 
+* A Recipe trading system - Create your own recipe (a How-To-Do list or Work list), then you can trade it publicly with a price
+* A recipe consists of items. Can record history of recipe completion.
+* A user needs to login 
+* Front page shows previews of publicly traded recipes
+* Need to deposit, credit/debit money
+* Need to have notification system and email system in replace.
+* Use UTC time 
 
+====================================================================
 
 Type of objects:
 *: PrivateRecipe with purchaseInformation
@@ -15,6 +17,8 @@ Type of objects:
 *: UserContext 
 *: MoneyAccount
 *: Repos
+
+====================================================================
 
 User Commands:
 * add new user - application level, auto giving $100 moneyaccount : add user <username>

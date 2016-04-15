@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Moq;
+using Ploeh.SemanticComparison.Fluent;
 using RecipeTraderDotNet.Core.Domain.Recipe;
 using RecipeTraderDotNet.Core.Tests.Utilities;
 using Should;
@@ -145,7 +146,20 @@ namespace RecipeTraderDotNet.Core.Tests.DomainTests.RecipeTests
 
             sut.Status = RecipeItemStatus.Done;
             newObj.Status.ShouldNotEqual(sut.Status);
+        }
 
+        [Fact]
+        public void DeepCopyUsingSemanticComparisonShouldWork()
+        {
+            var privateRecipe = TestObjectGenerator.TestObjectsGenerator.GenerateRandomPrivateRecipe(4);
+            privateRecipe.Id = 100;
+            var sut = new RecipeItem(_description, privateRecipe);
+            sut.Id = 200;
+
+            var actual = sut.DeepCopy(false, setStatusNow:false);
+
+            var expected = sut.AsSource().OfLikeness<RecipeItem>().Without(t => t.Id);
+            expected.ShouldEqual(actual);
         }
     }
 }

@@ -58,14 +58,17 @@ namespace RecipeTraderDotNet.Core.Domain.Recipe
             }
         }
 
-        public RecipeItem DeepCopy(bool keepId = true, RecipeBase newParent = null)
+        public RecipeItem DeepCopy(bool keepId = true, RecipeBase newParent = null, bool setStatusNow = true)
         {
             var newObj = this.Copy();
 
             if (newObj == null) return null;
 
-            newObj.Status = RecipeItemStatus.New;
-            newObj.TimeLastStatusChange = DateTime.UtcNow;
+            if (setStatusNow)
+            {
+                newObj.Status = RecipeItemStatus.New;
+                newObj.TimeLastStatusChange = DateTime.UtcNow;
+            }
 
             if (!keepId)
                 newObj.Id = 0;
