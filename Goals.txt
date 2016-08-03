@@ -1,4 +1,4 @@
-test from mac
+test from VS
 
 Practice Goals
 * IoC, used in app code and tests
