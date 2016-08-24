@@ -1,3 +1,5 @@
+test from VS
+
 Practice Goals
 * IoC, used in app code and tests
 * CI and CD using TeamCity (it can deploy to Azure) or discover the Auzre (cloud) way
